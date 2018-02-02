@@ -30,6 +30,14 @@ app.get('/todos/:id', isValid , (req,res) => {
   }).catch((e)=>{res.send.statusCode(400)})
 })
 
+app.delete('/todos/:id',isValid,(req,res) => {
+  var id = req.params.id
+  Todo.findByIdAndRemove(id).then((doc)=>{
+    res.send(doc)
+  }).catch((e)=>{
+    console.log(e)
+  })
+})
 
 app.post('/todos', (req,res) => {
   var todo = new Todo({
