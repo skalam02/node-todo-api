@@ -11,7 +11,7 @@ var UserSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: validator.isEmail,
-      message: `{value} is not a valid email`
+      message: '{value} is not a valid email'
     }
   },
   password: {
@@ -29,23 +29,20 @@ var UserSchema = new mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+   }]
 })
-
-var User = mongoose.model('User', UserSchema)
 
 UserSchema.methods.generateAuthToken = function () {
   var user = this;
-  var access = 'auth'
-  var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString()
-  
-  user.tokens.push({access, token})
-  
-  return user.save().then((token)=> {
+  var access = 'auth';
+  var token = jwt.sign({_id: user._id.toHexString()}, access).toString();
+  user.tokens.push({access, token});
+  return user.save().then(()=> {
     return token;
   })
 };
 
-module.exports = {
-  User
-}
+var User = mongoose.model('User', UserSchema)
+
+module.exports = {User}
+

@@ -39,12 +39,15 @@ app.get('/todos/:id', isValid , (req,res) => {
 app.post('/users', (req,res) => {
   var body = _.pick(req.body, ['email', 'password']);
   var user = new User(body);
-  console.log(user)
   
-  user.save()
-    .then((user)=>{return user.generateAuthToken()})
-    .then((token)=>{res.send(token)})
-    .catch((e)=> {res.status(400).send(e)})
+  user.save().then((user) => {
+    user.generateAuthToken();
+    res.send(user);
+  }).then((token)=> {
+    res.header('x-auth').send(user)
+  }).catch((e) => {
+    res.status(400).send(e)
+  })
 });
 
 app.post('/todos', (req,res) => {
