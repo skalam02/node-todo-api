@@ -45,11 +45,13 @@ UserSchema.methods.generateAuthToken = function () {
   var access = 'auth';
   var token = jwt.sign({_id: user._id.toHexString()}, access).toString();
   
-  user.tokens.push({access, token});
+  user.tokens.concat({access, token});
   
   return user.save().then(()=>{
     return token
-  }).catch((e)=>{})
+  }).catch((e)=>{
+    console.log(e)
+  })
 };
 
 UserSchema.statics.findByToken = function (token) {

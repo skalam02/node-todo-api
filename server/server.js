@@ -15,7 +15,6 @@ app.use(bodyParser.json())
 
 
 //Get Requests
-
 app.get('/users/me', (req, res) => {
   var token = req.header('x-auth');
   
@@ -46,6 +45,16 @@ app.get('/todos/:id', isValid , (req,res) => {
   }).catch((e)=>{res.send.statusCode(400)})
 })
 
+app.get('/users/me', (req,res)=> {
+  var token = req.header('x-auth')
+  
+  User.findByToken(token).then((user)=> {
+    if(!user) {
+      
+    }
+    res.send(user)
+  })
+})
 
 //POST Requests
 app.post('/users', (req,res) => {
@@ -60,22 +69,6 @@ app.post('/users', (req,res) => {
     res.status(400).send(e)
   })
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.post('/todos', (req,res) => {
   var todo = new Todo({
