@@ -8,6 +8,7 @@ var _ = require('lodash')
 var {mongoose} = require('./db/mongoose')
 var {Todo} = require('./models/todo')
 var {User} = require('./models/user')
+var {authenticate} = require('./middleware/authenticate')
 
 var port = process.env.PORT || 3000
 
@@ -15,15 +16,8 @@ app.use(bodyParser.json())
 
 
 //Get Requests
-app.get('/users/me', (req, res) => {
-  var token = req.header('x-auth');
-  
-  User.findByToken(token).then((user)=> {
-    if(!user) {
-      
-    }
-    res.send(user);
-  })
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user)
 })
 
 app.get('/todos', (req,res) => {
