@@ -1,0 +1,18 @@
+{
+  "summary": {
+    "title": "threat 1",
+    "owner": "me",
+    "description": "new system"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "diag1",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ],
+    "reviewer": "steve"
+  }
+}
